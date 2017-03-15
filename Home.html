@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Count Me Up</title>
+    <script type="text/javascript" src="lib/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="lib/knockout-3.4.2.js"></script>
+    <script type="text/javascript" src="lib/taffy-min.js"></script>
+    <script type="text/javascript" src="src/data-mock.js"></script>
+    <script type="text/javascript" src="src/countmeup.js"></script>
+    
+    <link href="css/style.css" rel="stylesheet"></link>
+</head>
+
+<body>
+    <header>
+        <div id="externalApps" class="toolbarBottom"> 
+            <div id="tooltop">
+                <div id="logo"></div>
+            </div>
+        </div>
+    </header>
+    
+    <div id="container">
+        <div class="sections">
+            <section class="title-section">
+                <div>
+                    Welcome to BBC Technical Challenge
+                </div>
+            </section>
+            <section class="user-section">
+                <div class="form-style-heading">
+                    User View
+                </div>
+                <ul class="form-style">
+                    <li><label>Your Name<span class="required">*</span></label><input id="input_user" class="field-long" data-bind="textInput: CurrentUser" /></li>
+                    <li>
+                        <label>Choose your candidate</label>
+                        <select id="ddl_candidates" data-bind="options: Candidates.Items,
+                                                               optionsText: 'Name',
+                                                               value: Candidates.Selected" class="field-select">
+                        </select>
+                    </li>
+                    <li>
+                        <input id="vote_btn" type="submit" value="Vote" data-bind="click: addVoteClickHandler, disable: IsCurrentUserNull" placeholder="First" />&nbsp;
+                        <input id="simulator" type="button" value="Add 10M Votes" data-bind="click: runSimulator, disable: IsSimulatorRunning" placeholder="Last">
+                    </li>
+                </ul>            
+            </section>
+            <section class="presenter-section">
+                <div class="form-style-heading">
+                    Presenter View
+                </div>
+                <ul class="form-style">
+                    <li><label>Total votes submitted</label><span id="total_votes" data-bind="text: Total.Amount"></span></li>
+                    <li><input id="count_btn" type="button" value="Count Me Up" data-bind="click: countMeUp"></li>
+                </ul>
+                <ul id="result" class="form-style" data-bind="visible: HasCountRequested">
+                    <li><label>Current Winner</label><span id="winner" data-bind="text: Winner"></span></li>
+                    <li>
+                        <table class="grdCand" id="grdCand">
+                            <thead class="grdCandHead">
+                                <tr>
+                                    <th>Candidate</th>
+                                    <th>Percentage</th>
+                                    <th>Votes</th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: { data: Candidates, as: 'candidates' }">
+                                <tr>
+                                    <td data-bind="text: candidates.Name" class="td-first"></td>
+                                    <td data-bind="text: candidates.Percentage" class="td-normal"></td>
+                                    <td data-bind="text: candidates.RealVotes" class="td-normal"></td>
+                                </tr>
+                            </tbody>
+                        </table>                        
+                    </li>
+                </ul>              
+            </section>
+        </div>
+        
+    </div>
+
+</body>
+</html>
